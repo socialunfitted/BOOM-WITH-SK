@@ -48,7 +48,7 @@
     <div class="container nav-container">
       <!-- Brand Logo & Identity -->
       <a href="#hero" class="brand-logo-wrap" aria-label="Boom With SK Home">
-        <img src="/images/logo.png" alt="Boom With SK Logo" class="brand-logo-img" />
+        <img src="/images/logo.png" alt="Boom With SK Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%23D97706\'/><path d=\'M50 15L58 35L78 25L65 45L85 50L65 55L78 75L58 65L50 85L42 65L22 75L35 55L15 50L35 45L22 25L42 35Z\' fill=\'%23FFFFFF\'/><text x=\'50\' y=\'58\' font-family=\'sans-serif\' font-weight=\'900\' font-size=\'22\' fill=\'%23DC2626\' text-anchor=\'middle\'>SK</text></svg>';" />
         <div class="brand-title-group">
           <div class="brand-name">BOOM WITH <span>SK</span></div>
           <span class="brand-sub">S.K Pyro Park • Sivakasi</span>
@@ -749,8 +749,8 @@
   <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping Cart">
     <div>
       <div class="cart-drawer-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <h3 style="font-size: 1.25rem;">Celebration Order Cart</h3>
+        <div class="cart-drawer-title-group">
+          <h3 class="cart-drawer-title">Order Cart</h3>
           <span class="badge badge-discount">70% Factory Off</span>
         </div>
         <button class="drawer-close" id="cart-drawer-close" aria-label="Close cart">
@@ -827,10 +827,10 @@
     <div class="product-page-modal">
       <!-- Top Bar: Brand Logo, Back to Store, Cart Button & Controls -->
       <div class="product-page-header">
-        <div style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; min-width: 0;">
           <!-- Big Logo & Brand Identity -->
           <a href="#hero" class="brand-logo-wrap" onclick="window.closeProductPage()" aria-label="Boom With SK Home">
-            <img src="/images/logo.png" alt="Boom With SK Logo" class="brand-logo-img" />
+            <img src="/images/logo.png" alt="Boom With SK Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%23D97706\'/><path d=\'M50 15L58 35L78 25L65 45L85 50L65 55L78 75L58 65L50 85L42 65L22 75L35 55L15 50L35 45L22 25L42 35Z\' fill=\'%23FFFFFF\'/><text x=\'50\' y=\'58\' font-family=\'sans-serif\' font-weight=\'900\' font-size=\'22\' fill=\'%23DC2626\' text-anchor=\'middle\'>SK</text></svg>';" />
             <div class="brand-title-group">
               <div class="brand-name">BOOM WITH <span>SK</span></div>
               <span class="brand-sub">S.K Pyro Park • Sivakasi</span>
@@ -843,7 +843,7 @@
           </button>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
           <!-- Cart Indicator Button -->
           <button class="nav-cart-btn" data-open-cart aria-label="Open Order Cart">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -878,9 +878,9 @@
     <div class="checkout-page-modal">
       <!-- Header Bar -->
       <div class="checkout-page-header">
-        <div style="display: flex; align-items: center; gap: var(--space-4);">
+        <div style="display: flex; align-items: center; gap: var(--space-4); min-width: 0;">
           <a href="#hero" class="brand-logo-wrap" onclick="window.closeCheckoutPage()" aria-label="Boom With SK Home">
-            <img src="/images/logo.png" alt="Boom With SK Logo" class="brand-logo-img" />
+            <img src="/images/logo.png" alt="Boom With SK Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%23D97706\'/><path d=\'M50 15L58 35L78 25L65 45L85 50L65 55L78 75L58 65L50 85L42 65L22 75L35 55L15 50L35 45L22 25L42 35Z\' fill=\'%23FFFFFF\'/><text x=\'50\' y=\'58\' font-family=\'sans-serif\' font-weight=\'900\' font-size=\'22\' fill=\'%23DC2626\' text-anchor=\'middle\'>SK</text></svg>';" />
             <div class="brand-title-group">
               <div class="brand-name">BOOM WITH <span>SK</span></div>
               <span class="brand-sub">S.K Pyro Park • Sivakasi</span>
@@ -888,7 +888,7 @@
           </a>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
           <button class="theme-toggle-btn" aria-label="Switch Theme">
             <span class="theme-icon">☀️</span>
             <span class="theme-text">White Page</span>
@@ -991,12 +991,12 @@
             <section class="checkout-section-card">
               <h2 class="checkout-sec-title">Shipping options</h2>
               <div class="checkout-radio-card active" style="margin-top: 1rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                  <div>
-                    <strong style="color: var(--text-primary); font-size: 0.95rem;">Shipping charges Extra</strong>
-                    <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">(Will be notified over WhatsApp During Purchase)</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px; min-width: 0;">
+                  <div style="min-width: 0; flex: 1;">
+                    <strong style="color: var(--text-primary); font-size: 0.92rem; display: block;">Shipping charges Extra</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; line-height: 1.35; word-break: break-word;">(Will be notified over WhatsApp During Purchase)</div>
                   </div>
-                  <span class="badge badge-green">Free</span>
+                  <span class="badge badge-green" style="flex-shrink: 0;">Free</span>
                 </div>
               </div>
             </section>

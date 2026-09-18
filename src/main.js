@@ -90,6 +90,7 @@ let cartState = {};
 
 // --- 3. Initialize App on DOM Ready ---
 document.addEventListener("DOMContentLoaded", () => {
+  initImageFallbacks();
   initTheme();
   initStickyHeader();
   initMobileDrawer();
@@ -939,7 +940,46 @@ function initModalSystem() {
   });
 }
 
-// --- 9. Subtle Particle Canvas ---
+// --- 9. SVG Image Fallback & Particle Engine ---
+const SVG_LOGO_FALLBACK = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23D97706'/><path d='M50 15L58 35L78 25L65 45L85 50L65 55L78 75L58 65L50 85L42 65L22 75L35 55L15 50L35 45L22 25L42 35Z' fill='%23FFFFFF'/><text x='50' y='58' font-family='sans-serif' font-weight='900' font-size='22' fill='%23DC2626' text-anchor='middle'>SK</text></svg>";
+
+const SVG_HERO_FALLBACK = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'><rect width='1200' height='675' fill='%230F172A'/><circle cx='600' cy='337' r='300' fill='url(%23g)' opacity='0.5'/><defs><radialGradient id='g'><stop offset='0%25' stop-color='%23F59E0B'/><stop offset='100%25' stop-color='%23DC2626' stop-opacity='0'/></radialGradient></defs><text x='600' y='270' font-family='sans-serif' font-weight='900' font-size='56' fill='%23F59E0B' text-anchor='middle'>BOOM WITH SK</text><text x='600' y='350' font-family='sans-serif' font-weight='800' font-size='42' fill='%23FFFFFF' text-anchor='middle'>SIVAKASI DIRECT WHOLESALE FIREWORKS</text><text x='600' y='430' font-family='sans-serif' font-weight='700' font-size='30' fill='%23DC2626' text-anchor='middle'>UP TO 70% FACTORY SAVINGS</text></svg>";
+
+function initImageFallbacks() {
+  const handleImg = (img) => {
+    if (img.dataset.fallbackSet) return;
+    img.dataset.fallbackSet = "true";
+    if (img.classList.contains("brand-logo-img")) {
+      img.src = SVG_LOGO_FALLBACK;
+    } else {
+      img.src = SVG_HERO_FALLBACK;
+    }
+  };
+
+  document.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("error", () => handleImg(img));
+    if (img.complete && img.naturalWidth === 0) {
+      handleImg(img);
+    }
+  });
+
+  // Observe dynamically inserted images
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+      m.addedNodes.forEach((node) => {
+        if (node.tagName === "IMG") {
+          node.addEventListener("error", () => handleImg(node));
+        } else if (node.querySelectorAll) {
+          node.querySelectorAll("img").forEach((img) => {
+            img.addEventListener("error", () => handleImg(img));
+          });
+        }
+      });
+    });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
 function initSparkParticles() {
   const canvas = document.getElementById("particle-canvas");
   const toggleBtn = document.querySelector(".particle-control");
@@ -950,19 +990,21 @@ function initSparkParticles() {
   let particles = [];
   let isRunning = true;
   let animationId;
+  let lastTime = 0;
+  const fpsInterval = 1000 / 30; // 30 FPS cap for high performance on mobile
 
   function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
   }
   resize();
-  window.addEventListener("resize", resize);
+  window.addEventListener("resize", resize, { passive: true });
 
   const colors = [
     "rgba(217, 119, 6, 0.5)",
     "rgba(245, 158, 11, 0.6)",
     "rgba(220, 38, 38, 0.35)",
-    "rgba(0, 0, 0, 0.25)"
+    "rgba(0, 0, 0, 0.2)"
   ];
 
   class Particle {
@@ -991,35 +1033,37 @@ function initSparkParticles() {
     }
 
     draw() {
-      ctx.save();
       ctx.globalAlpha = this.alpha;
       ctx.fillStyle = this.color;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
     }
   }
 
-  for (let i = 0; i < 28; i++) {
+  const particleCount = window.innerWidth < 768 ? 14 : 26;
+  for (let i = 0; i < particleCount; i++) {
     const p = new Particle();
     p.y = Math.random() * height;
     particles.push(p);
   }
 
-  function loop() {
+  function loop(currentTime) {
     if (!isRunning) return;
-    ctx.clearRect(0, 0, width, height);
-
-    particles.forEach((p) => {
-      p.update();
-      p.draw();
-    });
-
     animationId = requestAnimationFrame(loop);
+
+    const elapsed = currentTime - lastTime;
+    if (elapsed > fpsInterval) {
+      lastTime = currentTime - (elapsed % fpsInterval);
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+    }
   }
 
-  loop();
+  animationId = requestAnimationFrame(loop);
 
   if (toggleBtn) {
     toggleBtn.addEventListener("click", () => {
@@ -1027,10 +1071,10 @@ function initSparkParticles() {
       toggleBtn.classList.toggle("paused", !isRunning);
       const textSpan = toggleBtn.querySelector(".particle-text");
       if (isRunning) {
-        textSpan.textContent = "Sparks: Active";
-        loop();
+        if (textSpan) textSpan.textContent = "Sparks: Active";
+        animationId = requestAnimationFrame(loop);
       } else {
-        textSpan.textContent = "Sparks: Paused";
+        if (textSpan) textSpan.textContent = "Sparks: Paused";
         cancelAnimationFrame(animationId);
         ctx.clearRect(0, 0, width, height);
       }
@@ -1041,7 +1085,7 @@ function initSparkParticles() {
     if (document.hidden && isRunning) {
       cancelAnimationFrame(animationId);
     } else if (!document.hidden && isRunning) {
-      loop();
+      animationId = requestAnimationFrame(loop);
     }
   });
 }

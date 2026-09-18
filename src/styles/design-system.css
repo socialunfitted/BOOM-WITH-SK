@@ -208,12 +208,14 @@ img {
 .text-gradient-gold {
   background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #F59E0B 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 [data-theme="dark"] .text-gradient-gold {
   background: linear-gradient(135deg, #FFFFFF 20%, #FBBF24 70%, #F59E0B 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
